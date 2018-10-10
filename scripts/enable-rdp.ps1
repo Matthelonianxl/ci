@@ -25,15 +25,17 @@ if($env:appveyor_rdp_password) {
     # take from environment variable
     $password = $env:appveyor_rdp_password
     
+    cmd /c net user appveyor %password%
+    
     # change password. Best effort to ensure password change applied.
-    $count = 0
-    $valid = $false
-    do {
-      for ($i=0; $i -le 3; $i++) {ChangePassword($password); Start-Sleep -Milliseconds 100}
-      $valid = ValidatePassword($password)
-      $count++
-      if(!$valid) {Start-Sleep -Milliseconds 100}      
-    } while(!$valid -and ($count -lt 3))
+    #$count = 0
+    #$valid = $false
+    #do {
+    #  for ($i=0; $i -le 3; $i++) {ChangePassword($password); Start-Sleep -Milliseconds 100}
+    #  $valid = ValidatePassword($password)
+    #  $count++
+    #  if(!$valid) {Start-Sleep -Milliseconds 100}      
+    #} while(!$valid -and ($count -lt 3))
     
     [Microsoft.Win32.Registry]::SetValue("HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon", "DefaultPassword", $password)
 } else {
