@@ -25,7 +25,7 @@ if($env:appveyor_rdp_password) {
     # take from environment variable
     $password = $env:appveyor_rdp_password
     
-    cmd /c net user appveyor %password%
+    cmd /c net user appveyor %appveyor_rdp_password%
     
     # change password. Best effort to ensure password change applied.
     #$count = 0
